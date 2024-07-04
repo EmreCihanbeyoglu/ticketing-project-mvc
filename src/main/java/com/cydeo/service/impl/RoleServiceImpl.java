@@ -1,6 +1,7 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.RoleDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.service.IRoleService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,13 @@ public class RoleServiceImpl extends AbstractMapService<RoleDTO, Long> implement
     }
 
     @Override
+    public RoleDTO update(RoleDTO object) {
+        return super.update(object.getId(), object);
+    }
+
+    @Override
     public List<RoleDTO> findAll() {
         return super.findAll();
     }
+
 }

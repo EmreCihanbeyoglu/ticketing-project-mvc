@@ -28,5 +28,10 @@ public abstract class AbstractMapService<T, S> {
         return new ArrayList<>(map.values());
     }
 
+    T update(S id, T object) {
+        map.put(id, object);
+        return map.get(id);
+    }
+
 
 }
