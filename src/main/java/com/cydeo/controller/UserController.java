@@ -49,4 +49,10 @@ public class UserController {
         return "redirect:/user/create";
     }
 
+    @RequestMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") String username) {
+        userService.deleteById(username);
+        return "redirect:/user/create/";
+    }
+
 }
