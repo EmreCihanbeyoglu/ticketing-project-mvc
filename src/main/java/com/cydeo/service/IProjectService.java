@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IProjectService extends ICrudService<ProjectDTO, String>{
 
+    void completeProjectById(String projectCode);
 }

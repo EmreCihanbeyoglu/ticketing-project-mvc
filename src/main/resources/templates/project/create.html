@@ -54,7 +54,8 @@
                                                 <div class="form-group">
                                                     <label>Assigned Manager</label>
                                                     <select name="assignedmanager" class="custom-select" th:field="*{assignedManager}">
-                                                        <option th:each="manager : ${managerList}" th:text="${manager.username}" th:value="${manager.username}"></option>
+                                                        <option value="select">Select</option>
+                                                        <option th:each="manager : ${managerList}" th:text="${manager.getFirstname() + ' ' + manager.getLastname()}" th:value="${manager.getUsername()}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -110,32 +111,32 @@
                         <div class="col-md-12">
                             <section class="panel">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">User List</h2>
+                                    <h2 class="panel-title">Project List</h2>
                                 </header>
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped">
                                             <thead>
-                                            <tr th:each="project : ${projectList}">
-                                                <th scope="col" th:text="${project.getProjectCode()}">Project Code</th>
-                                                <th scope="col" th:text="${project.getProjectName()}">Project Name</th>
-                                                <th scope="col" th:text="${project.getStartDate() + ' - ' + project.getEndDate()}">Start - End Date</th>
-                                                <th scope="col" th:text="${project.getAssignedManager().username}">Manager</th>
-                                                <th scope="col" th:text="${project.getStatus()}">Status</th>
+                                            <tr>
+                                                <th scope="col">Project Code</th>
+                                                <th scope="col">Project Name</th>
+                                                <th scope="col">Start - End Date</th>
+                                                <th scope="col">Manager</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr th:each="project : ${projectList}">
+                                                <td th:text="${project.getProjectCode()}"></td>
+                                                <td th:text="${project.getProjectName()}"></td>
+                                                <td th:text="${#temporals.format(project.getStartDate(), 'dd.MM.yyyy' ) + ' - ' + #temporals.format(project.getEndDate(), 'dd.MM.yyyy')}"></td>
+                                                <td th:text="${project.assignedManager.firstname + ' ' + project.assignedManager.lastname}"></td>
+                                                <td th:text="${project.status.value}"></td>
                                                 <td>
-                                                    <a href="#"><button type="button" class="btn btn-warning rounded-0">Update</button></a>
-                                                    <a href="#"><button type="button" class="btn btn-danger rounded-0">Delete</button></a>
-                                                    <a href="#"><button type="button" class="btn btn-info rounded-0">Complete</button></a>
+                                                    <a th:href="@{/project/update/{projectCode}(projectCode=${project.projectCode})}"><button type="button" class="btn btn-warning rounded-0">Update</button></a>
+                                                    <a th:href="@{/project/delete/{projectCode}(projectCode=${project.projectCode})}"><button type="button" class="btn btn-danger rounded-0">Delete</button></a>
+                                                    <a th:href="@{/project/complete/{projectCode}(projectCode=${project.projectCode})}"><button type="button" class="btn btn-info rounded-0">Complete</button></a>
                                                 </td>
                                             </tr>
                                             </tbody>
