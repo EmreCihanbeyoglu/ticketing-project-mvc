@@ -1,9 +1,7 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
-import com.cydeo.dto.RoleDTO;
 import com.cydeo.dto.UserDTO;
-import com.cydeo.enums.ProjectStatus;
 import com.cydeo.service.IProjectService;
 import com.cydeo.service.IRoleService;
 import com.cydeo.service.IUserService;
@@ -35,7 +33,7 @@ public class ProjectController {
 
     @ModelAttribute("managerList")
     public List<UserDTO> getAllManagers() {
-        return userService.filterByRole(roleService.findById(2L));
+        return userService.filterManagers();
     }
 
     @GetMapping("/create")

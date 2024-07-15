@@ -1,10 +1,9 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.ProjectDTO;
-import com.cydeo.enums.ProjectStatus;
-import com.cydeo.service.ICrudService;
+import com.cydeo.dto.TaskDTO;
+import com.cydeo.enums.Status;
 import com.cydeo.service.IProjectService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class ProjectServiceImpl extends AbstractMapService<ProjectDTO, String> i
     @Override
     public ProjectDTO save(ProjectDTO project) {
         if(project.getStatus() == null) {
-            project.setStatus(ProjectStatus.ONGOING);
+            project.setStatus(Status.ONGOING);
         }
         return super.save(project.getProjectCode(), project);
     }
@@ -51,8 +50,9 @@ public class ProjectServiceImpl extends AbstractMapService<ProjectDTO, String> i
     @Override
     public void completeProjectById(String projectCode) {
         ProjectDTO project = super.findById(projectCode);
-        if(!project.getStatus().equals(ProjectStatus.FINISHED)) {
-            project.setStatus(ProjectStatus.FINISHED);
+        if(!project.getStatus().equals(Status.FINISHED)) {
+            project.setStatus(Status.FINISHED);
         }
     }
+
 }

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface IUserService extends ICrudService<UserDTO, String>{
 
-    List<UserDTO> filterByRole(RoleDTO role);
+    List<UserDTO> filterManagers();
+
+    List<UserDTO> filterEmployees();
 
 }

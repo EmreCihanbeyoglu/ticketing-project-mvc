@@ -2,20 +2,18 @@ package com.cydeo.bootstrap;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.RoleDTO;
+import com.cydeo.dto.TaskDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.enums.Gender;
-import com.cydeo.enums.ProjectStatus;
+import com.cydeo.enums.Status;
 import com.cydeo.service.IProjectService;
 import com.cydeo.service.IRoleService;
+import com.cydeo.service.ITaskService;
 import com.cydeo.service.IUserService;
-import com.cydeo.service.impl.RoleServiceImpl;
-import com.cydeo.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Component
 public class DataGenerator implements CommandLineRunner {
@@ -23,12 +21,14 @@ public class DataGenerator implements CommandLineRunner {
     IRoleService roleService;
     IUserService userService;
     IProjectService projectService;
+    ITaskService taskService;
 
 
-    public DataGenerator(IRoleService roleService, IUserService userService, IProjectService projectService) {
+    public DataGenerator(IRoleService roleService, IUserService userService, IProjectService projectService, ITaskService taskService) {
         this.roleService = roleService;
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @Override
@@ -56,13 +56,25 @@ public class DataGenerator implements CommandLineRunner {
         userService.save(user6);
 
 
-        ProjectDTO project1 = new ProjectDTO("cinema saloon", "001", user1, LocalDate.of(2021, 10, 4), LocalDate.of(2024, 10, 4), "nothing", ProjectStatus.ONGOING);
-        ProjectDTO project2 = new ProjectDTO("cinema saloon", "002", user2, LocalDate.of(2021, 10, 4), LocalDate.of(2024, 10, 4), "nothing", ProjectStatus.FINISHED);
-        ProjectDTO project3 = new ProjectDTO("cinema saloon", "003", user3, LocalDate.of(2021, 10, 4), LocalDate.of(2024, 10, 4), "nothing", ProjectStatus.FINISHED);
+        ProjectDTO project1 = new ProjectDTO("Cypress project", "001", user1, LocalDate.of(2021, 10, 4), LocalDate.of(2024, 10, 4), "nothing", Status.ONGOING);
+        ProjectDTO project2 = new ProjectDTO("Java project", "002", user2, LocalDate.of(2021, 10, 4), LocalDate.of(2024, 10, 4), "nothing", Status.FINISHED);
+        ProjectDTO project3 = new ProjectDTO("Rest Assured project", "003", user3, LocalDate.of(2021, 10, 4), LocalDate.of(2024, 10, 4), "nothing", Status.FINISHED);
 
         projectService.save(project1);
         projectService.save(project2);
         projectService.save(project3);
+
+
+        TaskDTO task1 = new TaskDTO(project1, user1, "generating report", "generating report detail", LocalDate.of(2024, 1, 1), Status.ONGOING);
+        TaskDTO task2 = new TaskDTO(project2, user1, "parallelization", "parallelization report detail", LocalDate.of(2024, 1, 1), Status.ONGOING);
+        TaskDTO task3 = new TaskDTO(project3, user2, "integration to test management tool", "integration to test management tool detail", LocalDate.of(2024, 1, 1), Status.FINISHED);
+        TaskDTO task4 = new TaskDTO( project3, user3, "integration to MS Teams", "integration to MS Teams detail", LocalDate.of(2024, 1, 1), Status.ONGOING);
+
+
+        taskService.save(task1);
+        taskService.save(task2);
+        taskService.save(task3);
+        taskService.save(task4);
 
     }
 }
